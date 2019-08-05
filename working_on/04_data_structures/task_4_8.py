@@ -19,3 +19,13 @@
 '''
 
 ip = '192.168.3.1'
+ip = ip.split('.')
+ipb0 = int(ip[0])
+ipb1 = int(ip[1])
+ipb2 = int(ip[2])
+ipb3 = int(ip[3])
+print(f"""
+IP address (Decimal and binary):
+{ip[0]:<10} {ip[1]:<10} {ip[2]:<10} {ip[3]:<10}
+{ipb0:<010b} {ipb1:<010b} {ipb2:<010b} {ipb3:<010b}
+""")
