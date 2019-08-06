@@ -26,6 +26,6 @@ ipb2 = int(ip[2])
 ipb3 = int(ip[3])
 print(f"""
 IP address (Decimal and binary):
-{ip[0]:<10} {ip[1]:<10} {ip[2]:<10} {ip[3]:<10}
-{ipb0:<010b} {ipb1:<010b} {ipb2:<010b} {ipb3:<010b}
+{ip[0]:<8} {ip[1]:<8} {ip[2]:<8} {ip[3]:<8}
+{ipb0:<08b} {ipb1:<08b} {ipb2:<08b} {ipb3:<08b}
 """)

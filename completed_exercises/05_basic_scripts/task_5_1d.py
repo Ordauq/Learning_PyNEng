@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 '''
-Задание 5.1
+Задание 5.1d
 
-
-В задании создан словарь, с информацией о разных устройствах.
-
-Необходимо запросить у пользователя ввод имени устройства (r1, r2 или sw1).
-И вывести информацию о соответствующем устройстве на стандартный поток вывода
-(информация будет в виде словаря).
-
+Переделать скрипт из задания 5.1c таким образом, чтобы, при запросе параметра,
+пользователь мог вводить название параметра в любом регистре.
 
 Пример выполнения скрипта:
-$ python task_5_1.py
+$ python task_5_1d.py
 Введите имя устройства: r1
-{'location': '21 New Globe Walk', 'vendor': 'Cisco', 'model': '4451', 'ios': '15.4', 'ip': '10.255.0.1'}
+Введите имя параметра (ios, model, vendor, location, ip): IOS
+15.4
+
 
 Ограничение: нельзя изменять словарь london_co.
 
@@ -46,3 +43,15 @@ london_co = {
         'routing': True
     }
 }
+
+
+# Solution
+device = input('About which device you want see info?\nAvaliable list of devices: r1/r2/sw1 ')
+list_of_arg = sorted(london_co[device])
+list_of_arg = ', '.join(list_of_arg)
+print("""What exactly you want to see from this devices?
+Avaliable info:""", list_of_arg)
+arg = input('Please choose: ')
+arg = arg.lower()
+print('\n' + '-' * 30)
+print(london_co[device][arg])

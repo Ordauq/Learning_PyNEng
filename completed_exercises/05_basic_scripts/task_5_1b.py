@@ -45,3 +45,13 @@ london_co = {
         'routing': True
     }
 }
+
+# Solution
+device = input('About which device you want see info?\nAvaliable list of devices: r1/r2/sw1 ')
+list_of_arg = sorted(london_co[device])
+list_of_arg = ', '.join(list_of_arg)
+print("""What exactly you want to see from this devices?
+Avaliable info:""", list_of_arg)
+arg = input('Please choose: ')
+print('\n' + '-' * 30)
+print(london_co[device][arg])
