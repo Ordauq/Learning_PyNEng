@@ -13,3 +13,11 @@
 
 mac = ['aabb:cc80:7000', 'aabb:dd80:7340', 'aabb:ee80:7000', 'aabb:ff80:7000']
 
+# Solution
+mac_cisco = []
+for mac_addr_str in mac:
+    mac_addr_str = mac_addr_str.replace(':', ".")
+    #print(mac_addr)
+    mac_cisco.append(mac_addr_str)
+
+print(mac_cisco)

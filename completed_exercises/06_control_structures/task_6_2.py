@@ -14,3 +14,24 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+# Solution
+try:
+    ip_addr = input('Hello. Please enter IP address in format x.x.x.x: ')
+    #ip_addr = ip_addr.strip() - split already do this
+    ip_octet_list = ip_addr.split('.')
+    first_byte = int(ip_octet_list[0])
+    if first_byte>0 and first_byte<=223:
+        print(f'Type of IP {ip_addr} is - unicast ')
+    elif first_byte>=224 and first_byte<=239:
+        print(f'Type of IP {ip_addr} is - multicast ')
+    elif ip_addr == '255.255.255.255':
+        print(f'Type of IP {ip_addr} is - broadcast ')
+    elif ip_addr == '0.0.0.0':
+        print(f'Type of IP {ip_addr} is - unassigned ')
+    else:
+        print(f'Type of IP {ip_addr} is - unused ')
+
+
+except ValueError:
+    print('Please enter IP address (INT values, with dot as separator) in specified earlier format')
