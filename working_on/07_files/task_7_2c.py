@@ -17,3 +17,23 @@
 '''
 
 ignore = ['duplex', 'alias', 'Current configuration']
+
+# Solution
+import sys
+
+
+with open(sys.argv[1], 'r') as config, open(sys.argv[2], 'w') as dst:
+    for line in config:
+        #counter = 0
+        if line.startswith('!'):
+            pass
+        else:
+            counter = 0
+            for word in ignore:
+                if word in line:
+                    counter +=1
+                    break
+            if counter == 0:
+                dst.write(line)
+            else:
+                pass

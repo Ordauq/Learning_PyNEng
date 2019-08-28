@@ -17,3 +17,11 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 '''
+
+# Solution
+
+with open('CAM_table.txt', 'r') as mac:
+    for line in mac:
+        if 'DYNAMIC' in line:
+            a = line.split()
+            print('{0:<5} {1:17} {2:10}'.format(a[0], a[1], a[3]))

@@ -12,4 +12,23 @@
 
 '''
 
-ignore = ['duplex', 'alias', 'Current configuration']
+ignore = ['Current configuration', 'duplex', 'alias']
+# Solution
+import sys
+
+
+with open(sys.argv[1], 'r') as config:
+    for line in config:
+        #counter = 0
+        if line.startswith('!'):
+            pass
+        else:
+            counter = 0
+            for word in ignore:
+                if word in line:
+                    counter +=1
+                    break
+            if counter == 0:
+                print(line.rstrip())
+            else:
+                pass

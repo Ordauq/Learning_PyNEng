@@ -1,3 +1,4 @@
+#!/usr/bin/python3.7
 # -*- coding: utf-8 -*-
 '''
 Задание 7.2
@@ -12,3 +13,13 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+# Solution
+import sys
+
+with open(sys.argv[1], 'r') as config:
+    for line in config:
+        if line.startswith('!'):
+            pass
+        else:
+            print(line.rstrip())
