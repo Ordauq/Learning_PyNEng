@@ -22,3 +22,29 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
 
+# Solution
+def get_int_vlan_map(config_filename):
+    '''
+    config_filename - файл с конфигом интерефейсов (cisco-like)
+
+    Возвращает кортеж из двух словарей (для access и для trunk-портов)
+    '''
+    with open(config_filename, 'r') as config:
+        interface_access = {}
+        interface_trunk = {}
+        for line in config:
+            if line.startswith('interface'):
+                iface = line.split()[-1].rstrip()
+            if 'switchport access vlan' in line:
+                vlan = line.split()[-1].rstrip()
+                interface_access[iface] = vlan
+            elif 'switchport trunk allowed vlan' in line:
+                vlan = (line.split()[-1].rstrip().split(','))
+                for vid in vlan:
+                    interface_trunk.setdefault(iface, []).append(int(vid))
+
+
+    return (interface_access, interface_trunk)
+
+for i in get_int_vlan_map('config_sw1.txt'):
+    print(i)
