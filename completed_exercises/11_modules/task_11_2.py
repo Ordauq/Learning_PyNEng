@@ -41,3 +41,45 @@ Cгенерировать топологию, которая соответст�
 
 '''
 
+# Solution
+
+import draw_network_graph as dr
+
+def readfile(file):
+        with open(file, 'r') as config:
+            return config.read()
+
+def parse_cdp_neighbors(command_output):
+    command_output = command_output.strip().split('\n')
+    device_dict = {}
+    for line in command_output:
+        if 'show cdp neighbors' in line:
+            device_id = line[0:line.find('>')]
+        if 'Eth' in line:
+            line = line.split()
+            key = (device_id, line[1]+line[2])
+            value = (line[0], line[-2]+line[-1])
+            device_dict.update({key: value})
+    
+    return device_dict
+
+def create_network_map(filenames):
+    topology_dict = {}
+    for file in filenames:
+        current_file = readfile(file)
+        topology_dict.update(parse_cdp_neighbors(current_file))
+    
+    great_fucking_topology = {}
+    tmpDict = topology_dict.copy()
+    for k in tmpDict.keys():
+        for v in tmpDict.values():
+            if k[0] == v[0]:
+                if k == v:
+                    pass
+                else:
+                    great_fucking_topology.update({k : tmpDict.get(k)})
+
+    return great_fucking_topology
+
+#print(create_network_map(['sh_cdp_n_sw1.txt', 'sh_cdp_n_r1.txt', 'sh_cdp_n_r2.txt', 'sh_cdp_n_r3.txt']))
+dr.draw_topology(create_network_map(['sh_cdp_n_sw1.txt', 'sh_cdp_n_r1.txt', 'sh_cdp_n_r2.txt', 'sh_cdp_n_r3.txt']))
