@@ -24,3 +24,20 @@ description Connected to SW1 port Eth 0/1
 
 Проверить работу функции на файле sh_cdp_n_sw1.txt.
 '''
+
+# Solution
+
+import re
+
+def generate_description_from_cdp(filename):
+    with open('sh_cdp_n_sw1.txt', 'r') as config:
+        regex = (r'(?P<remote_device>\w+)\s+(?P<local_iface>\w+\s{1}\d+\/\d+)\s+\d+\s+[R|T|B|S|H|I|r|P|\s{1}]+\s+[\d]+\s+(?P<remote_iface>\w+\s{1}\d+\/\d+)')
+        CDP_GREP = re.findall(regex, config.read())
+        iface_dict = {}
+        for remote_dev, local_iface, remote_iface in CDP_GREP:
+            desc = 'description Connected to {} port {}'.format(remote_dev, remote_iface)
+            iface_dict.setdefault(local_iface, desc)
+
+    print(iface_dict)
+
+generate_description_from_cdp('sh_cdp_n_sw1.txt') 

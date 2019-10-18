@@ -22,3 +22,17 @@
 диапазоны адресов и так далее, так как обрабатывается вывод команды, а не ввод пользователя.
 
 '''
+
+# Solution
+
+import sys
+import re
+
+def get_ip_from_cfg(filename):
+    regex = (r'ip address (?P<ip>\d+\.\d+\.\d+\.\d+) (?P<mask>\d+\.\d+\.\d+\.\d+)')
+    with open(filename, 'r') as f:
+        IP_ADDR = re.findall(regex, f.read())
+
+    return IP_ADDR
+
+get_ip_from_cfg(sys.argv[1])

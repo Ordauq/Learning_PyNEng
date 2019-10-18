@@ -32,3 +32,23 @@ object network LOCAL_10.1.9.5
 Во всех правилах для ASA интерфейсы будут одинаковыми (inside,outside).
 '''
 
+# Solution
+
+import sys
+import re
+
+def convert_ios_nat_to_asa(src_nat_ios_rules, dst_asa_nat_rules):
+    with open(src_nat_ios_rules, 'r') as IOS, open(dst_asa_nat_rules, 'w') as ASA:
+        for line in IOS:
+            ASA_RULE = re.sub(r'(ip nat inside source static tcp\s)'
+                            r'(\d+.\d+.\d+.\d+)'
+                            r'(\s\d+\s)'
+                            r'(interface GigabitEthernet0/1\s)'
+                            r'(\d+\s)', 
+                            r'object network LOCAL_\2 \n host \2 \n nat (inside,outside) static interface service tcp\3\5', line)
+            ASA.write(ASA_RULE)
+
+    return None
+
+
+convert_ios_nat_to_asa(sys.argv[1], sys.argv[2])

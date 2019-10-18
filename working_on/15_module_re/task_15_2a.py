@@ -25,3 +25,18 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+# Solution
+
+import re
+import task_15_2
+
+def convert_to_dict(row_names, values):
+    list_of_tuple = task_15_2.parse_sh_ip_int_br(values)
+    results = [{k: v for k, v in zip(row_names, tup)} for tup in list_of_tuple]
+
+    return results
+
+columns = ['IFace','IPAddr','Status','Protocol']
+
+convert_to_dict(columns, 'sh_ip_int_br.txt')
