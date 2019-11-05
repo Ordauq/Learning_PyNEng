@@ -39,9 +39,59 @@
 Кроме того, создан список заголовков (headers), который должен быть записан в CSV.
 '''
 
+# Solution
+
 import glob
+import re
+import csv
 
 sh_version_files = glob.glob('sh_vers*')
 #print(sh_version_files)
 
 headers = ['hostname', 'ios', 'image', 'uptime']
+
+def parse_sh_version(line):
+    IOS_REGEX = 'Cisco IOS Software, \S+ Software \S+ Version ([^,]+)'
+    IMAGE_REGEX = 'System image file is \"(\S+:\S+)\"'
+    UPTIME_REGEX = 'router uptime is (\d+ days, \d+ hours, \d+ minutes)'
+    IOS = ''.join(re.findall(IOS_REGEX, line))
+    IMAGE = ''.join(re.findall(IMAGE_REGEX, line))
+    UPTIME = ''.join(re.findall(UPTIME_REGEX, line))
+    result = (IOS, IMAGE, UPTIME)
+    #print(result)
+    return result
+
+def file_to_line(filename):
+    with open(filename, 'r') as SHOW_FILE:
+        file_on_line = SHOW_FILE.read()
+    
+    return file_on_line
+
+def write_inventory_to_csv(data_filenames, csv_filename):
+    with open(csv_filename, 'w',) as file_results:
+        writer = csv.writer(file_results, delimiter=';')
+        writer.writerow(headers)
+        for file in data_filenames:
+            f = []
+            huynya = ''
+            ADS = re.match('sh_version_(\S+).txt', file)
+            result = parse_sh_version(file_to_line(file))
+            f.append(ADS.group(1))
+            for i in result:
+                f.append(i)
+            #print(f)
+            writer.writerow(f)
+
+    return None
+
+files = ['sh_version_r1.txt', 'sh_version_r2.txt', 'sh_version_r3.txt']
+
+
+write_inventory_to_csv(files, 'routers_inventory.csv')
+#for item in file_to_line(files):
+#    print(item)
+
+
+
+
+
