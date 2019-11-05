@@ -72,15 +72,14 @@ def write_inventory_to_csv(data_filenames, csv_filename):
         writer = csv.writer(file_results, delimiter=';')
         writer.writerow(headers)
         for file in data_filenames:
-            f = []
-            huynya = ''
-            ADS = re.match('sh_version_(\S+).txt', file)
+            final_result = []
+            DEVICE_NAME = re.match('sh_version_(\S+).txt', file)
             result = parse_sh_version(file_to_line(file))
-            f.append(ADS.group(1))
+            final_result.append(DEVICE_NAME.group(1))
             for i in result:
-                f.append(i)
+                final_result.append(i)
             #print(f)
-            writer.writerow(f)
+            writer.writerow(final_result)
 
     return None
 
